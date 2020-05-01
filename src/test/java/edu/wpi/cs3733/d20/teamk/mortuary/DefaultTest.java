@@ -1,7 +1,7 @@
 /*-------------------------*/
 /* DO NOT DELETE THIS TEST */
 /*-------------------------*/
-package edu.wpi.teamname;
+package edu.wpi.cs3733.d20.teamk.mortuary;
 
 import org.junit.jupiter.api.Test;
 
