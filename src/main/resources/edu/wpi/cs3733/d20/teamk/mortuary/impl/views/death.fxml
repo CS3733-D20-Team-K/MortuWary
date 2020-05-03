@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.d20.teamk.mortuary.impl.views.DeathCertController">
+   <children>
+      <ImageView fx:id="background" fitHeight="483.0" fitWidth="806.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/death.PNG" />
+         </image>
+      </ImageView>
+      <Label fx:id="name" alignment="BOTTOM_CENTER" layoutX="108.0" layoutY="230.0" prefHeight="45.0" prefWidth="456.0" text="Name">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="day" layoutX="186.0" layoutY="305.0" text="Day" />
+      <Label fx:id="month" layoutX="312.0" layoutY="306.0" text="Month" />
+      <Label fx:id="year" layoutX="492.0" layoutY="306.0" text="Year" />
+      <Label fx:id="hospital" layoutX="152.0" layoutY="340.0" text="Hospital" />
+      <ImageView fx:id="signature" fitHeight="33.0" fitWidth="232.0" layoutX="340.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
