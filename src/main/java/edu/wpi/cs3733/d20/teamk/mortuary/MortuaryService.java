@@ -18,11 +18,28 @@ public interface MortuaryService {
     run(xcoord, ycoord, windowWidth, windowLength, cssPath, originNodeID, EntryPoint.NEW, null);
   }
 
-  default void run(int xcoord, int ycoord, int windowWidth, int windowLength, String cssPath, String nodeId, EntryPoint ep) {
+  default void run(
+      int xcoord,
+      int ycoord,
+      int windowWidth,
+      int windowLength,
+      String cssPath,
+      String nodeId,
+      EntryPoint ep)
+      throws MortuaryServiceException {
     run(xcoord, ycoord, windowWidth, windowLength, cssPath, nodeId, ep);
   }
 
-  void run(int xcoord, int ycoord, int windowWidth, int windowLength, String cssPath, String nodeId, EntryPoint ep, UUID id);
+  void run(
+      int xcoord,
+      int ycoord,
+      int windowWidth,
+      int windowLength,
+      String cssPath,
+      String nodeId,
+      EntryPoint ep,
+      UUID id)
+      throws MortuaryServiceException;
 
   void addRequest(MortuaryRequest request) throws MortuaryServiceException;
 
