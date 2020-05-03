@@ -22,9 +22,9 @@ public interface MortuaryService {
         removeRequest(request.getId());
     }
 
-    void addEmployee(Employee employee);
+    void addEmployee(Employee employee) throws MortuaryServiceException;
 
-    void removeEmployee(UUID employee);
+    void removeEmployee(UUID employee) throws MortuaryServiceException;
 
     default void removeEmployee(Employee employee) throws MortuaryServiceException {
         removeEmployee(employee.getId());
