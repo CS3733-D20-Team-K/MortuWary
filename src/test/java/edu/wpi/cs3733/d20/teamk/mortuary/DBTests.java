@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -33,6 +34,8 @@ public class DBTests {
           LocalDateTime.now(),
           "She just magically died it was crazy",
           "KLABS00501");
+  UUID testEmpID;
+  UUID testPerID;
 
   private static void delete(Path directory) throws IOException {
     if (Files.exists(directory)) {
@@ -65,17 +68,20 @@ public class DBTests {
     controller.addPerson(globalPerson);
     controller.addEmployee(globalEmp);
     controller.addRequest(globalRequest);
+    testEmpID = UUID.randomUUID();
+    testPerID = UUID.randomUUID();
+    controller.addEmployee(testEmpID, "potato", "potato");
   }
 
   @Test
   public void addEmployeeTest() {
-    controller.addEmployee(UUID.randomUUID(), "Dan Burly", "dburly");
     controller.addEmployee("Test Man", "tman");
+    controller.addEmployee(UUID.randomUUID(), "Dan Burly", "dburly");
   }
 
   @Test
   public void addPerson() {
-    controller.addPerson(UUID.randomUUID(), "Ima Dedman", "MALE", 92);
+    controller.addPerson(testPerID, "Ima Dedman", "MALE", 92);
     controller.addPerson("Igot Kildred", "OTHER", 21);
   }
 
@@ -86,6 +92,9 @@ public class DBTests {
 
     Employee test = controller.getEmployee(globalEmp.getId()).get();
     assertEquals(test, globalEmp);
+
+    controller.removeEmployee(testEmpID);
+    assertEquals(controller.getEmployee(testEmpID), Optional.empty());
   }
 
   @Test

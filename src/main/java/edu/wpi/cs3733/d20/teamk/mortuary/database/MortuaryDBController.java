@@ -129,6 +129,38 @@ public class MortuaryDBController {
   }
 
   /**
+   * Removes the user from the database with the given UUID
+   *
+   * @param id
+   * @throws SQLException
+   */
+  public void removeEmployee(UUID id) throws SQLException {
+    String statement = "delete from employees where empID = ?";
+    execute(statement, Arrays.asList(id.toString()));
+  }
+
+  /**
+   * Removes the user from the database with the given username
+   *
+   * @param username
+   * @throws SQLException
+   */
+  public void removeEmployee(String username) throws SQLException {
+    String statement = "delete from employees where username = ?";
+    execute(statement, Arrays.asList(username));
+  }
+
+  /**
+   * Takes in a person and removes them from the database.
+   *
+   * @param employee
+   * @throws SQLException
+   */
+  public void removeEmployee(Employee employee) throws SQLException {
+    removeEmployee(employee.getId());
+  }
+
+  /**
    * Adds a deceased person to the Database
    *
    * @param id The deceased person's id
@@ -168,6 +200,15 @@ public class MortuaryDBController {
    */
   public void addPerson(Person person) {
     addPerson(person.getId(), person.getName(), person.getGender(), person.getAge());
+  }
+
+  public void removePerson(UUID id) throws SQLException {
+    String statement = "delete from deceased where personID = ?";
+    execute(statement, Arrays.asList(id.toString()));
+  }
+
+  public void removePerson(Person person) throws SQLException {
+    removeEmployee(person.getId());
   }
 
   /**
@@ -372,11 +413,6 @@ public class MortuaryDBController {
     }
     return output;
   }
-
-  // public void removeEmployee(Employee) {}
-  public void removeEmployee(UUID id) {}
-  // public void getCreatedRequests(Employee) {}
-  // public void getCreatedRequests(UUID id) {}
 
   /**
    * Turns a mortuaryserivice into a list of strings
