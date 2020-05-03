@@ -1,12 +1,6 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl;
 
-import edu.wpi.cs3733.d20.teamk.mortuary.Circumstance;
-import edu.wpi.cs3733.d20.teamk.mortuary.Employee;
-import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryRequest;
-import edu.wpi.cs3733.d20.teamk.mortuary.Person;
-import java.time.LocalDateTime;
-
-import edu.wpi.cs3733.d20.teamk.mortuary.impl.views.SignatureController;
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.views.NewRequestController;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
 import io.github.socraticphoenix.jamfx.JamProperties;
@@ -28,26 +22,16 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    MortuaryRequest request =
-        new MortuaryRequest(
-            new Employee("Bob"),
-            new Person("Dead K. Died", "male", 42),
-            Circumstance.CRIME,
-            LocalDateTime.now(),
-            "He got crime'd",
-            "lunch_room");
-
     Scene scene = new Scene(new AnchorPane());
     primaryStage.setScene(scene);
-    Pair<SignatureController, Pane> loaded =
-            JamController.load(
-                    SignatureController.class.getResource("newRequest.fxml"),
-                    scene,
-                    new JamEnvironment(),
-                    new JamProperties());
+    Pair<NewRequestController, Pane> loaded =
+        JamController.load(
+            NewRequestController.class.getResource("newRequest.fxml"),
+            scene,
+            new JamEnvironment(),
+            new JamProperties());
     scene.setRoot(loaded.getValue());
     primaryStage.show();
-    //request.printCertificate("Brigham and Women's Faulkner Hospital");
   }
 
   @Override
