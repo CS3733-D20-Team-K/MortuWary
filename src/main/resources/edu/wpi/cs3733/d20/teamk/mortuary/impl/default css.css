@@ -1,0 +1,10 @@
+.jfx-button{
+    /*-fx-font-family: Lato;*/
+    -fx-font-style: normal;
+    -fx-font-weight: normal;
+    -fx-text-fill: #f1f1f1;
+    -fx-background-color:  #194C80;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-effect: dropshadow(one-pass-box ,black ,10 ,0 ,2 ,0);
+}
