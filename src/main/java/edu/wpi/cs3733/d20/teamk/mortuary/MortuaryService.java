@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.d20.teamk.mortuary;
 
+import javafx.scene.layout.Pane;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -7,6 +9,8 @@ import java.util.UUID;
 public interface MortuaryService {
 
     void run(int xcoord, int ycoord, int windowWidth, int windowLength, String cssPath, String destNodeID, String originNodeID) throws MortuaryServiceException;
+
+    Pane run(int windowWidth, int windowLength, String cssPath);
 
     void addRequest(MortuaryRequest request) throws MortuaryServiceException;
 
