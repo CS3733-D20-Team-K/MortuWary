@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.d20.teamk.mortuary;
+package edu.wpi.cs3733.d20.teamk.mortuary.impl;
 
 public class Main {
 

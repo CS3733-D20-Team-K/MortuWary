@@ -29,7 +29,7 @@ dependencies {
             'org.slf4j:slf4j-simple:1.7.30',
 
             'com.github.SocraticPhoenix:Occurrence:master-SNAPSHOT',
-            'com.github.SocraticPhoenix:JamFX:master-SNAPSHOT'
+            'com.github.SocraticPhoenix:JamFX:f97079841c'
     )
 
     testImplementation(
