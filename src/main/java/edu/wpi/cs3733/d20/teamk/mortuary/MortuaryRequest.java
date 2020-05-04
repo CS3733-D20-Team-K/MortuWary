@@ -2,6 +2,7 @@ package edu.wpi.cs3733.d20.teamk.mortuary;
 
 import edu.wpi.cs3733.d20.teamk.mortuary.impl.cert.CertPrinter;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -37,13 +38,13 @@ public class MortuaryRequest {
       String description,
       String location) {
     this.id = UUID.randomUUID();
-    this.openedTime = LocalDateTime.now();
+    this.openedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     this.closedTime = null;
 
     this.creator = creator;
     this.deceased = deceased;
     this.circumstance = circumstance;
-    this.time = time;
+    this.time = time.truncatedTo(ChronoUnit.SECONDS);
     this.description = description;
     this.location = location;
   }
@@ -57,7 +58,7 @@ public class MortuaryRequest {
   }
 
   public void close() {
-    this.closedTime = LocalDateTime.now();
+    this.closedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
   }
 
   public void reopen() {

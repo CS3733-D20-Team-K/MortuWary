@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Employee {
-  private UUID id;
+  private String id;
   private String name;
   private String username;
 
   public Employee(String name, String username) {
-    this(UUID.randomUUID(), name, username);
+    this(UUID.randomUUID().toString(), name, username);
   }
 
   public Employee(String name) {

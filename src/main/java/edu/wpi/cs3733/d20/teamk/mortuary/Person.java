@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.d20.teamk.mortuary;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,6 +13,6 @@ public class Person {
   private int age;
 
   public Person(String name, String gender, int age) {
-    this(name, name, gender, age);
+    this(UUID.randomUUID().toString(), name, gender, age);
   }
 }

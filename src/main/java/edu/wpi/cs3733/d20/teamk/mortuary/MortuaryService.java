@@ -3,11 +3,10 @@ package edu.wpi.cs3733.d20.teamk.mortuary;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
-import javafx.scene.layout.Pane;
 
 public interface MortuaryService {
 
-  void run(
+  default void run(
       int xcoord,
       int ycoord,
       int windowWidth,
@@ -15,9 +14,32 @@ public interface MortuaryService {
       String cssPath,
       String destNodeID,
       String originNodeID)
-      throws MortuaryServiceException;
+      throws MortuaryServiceException {
+    run(xcoord, ycoord, windowWidth, windowLength, cssPath, originNodeID, EntryPoint.NEW, null);
+  }
 
-  Pane run(int windowWidth, int windowLength, String cssPath);
+  default void run(
+      int xcoord,
+      int ycoord,
+      int windowWidth,
+      int windowLength,
+      String cssPath,
+      String nodeId,
+      EntryPoint ep)
+      throws MortuaryServiceException {
+    run(xcoord, ycoord, windowWidth, windowLength, cssPath, nodeId, ep);
+  }
+
+  void run(
+      int xcoord,
+      int ycoord,
+      int windowWidth,
+      int windowLength,
+      String cssPath,
+      String nodeId,
+      EntryPoint ep,
+      UUID id)
+      throws MortuaryServiceException;
 
   void addRequest(MortuaryRequest request) throws MortuaryServiceException;
 
@@ -31,7 +53,7 @@ public interface MortuaryService {
 
   void addEmployee(Employee employee) throws MortuaryServiceException;
 
-  void removeEmployee(UUID employee) throws MortuaryServiceException;
+  void removeEmployee(String employee) throws MortuaryServiceException;
 
   default void removeEmployee(Employee employee) throws MortuaryServiceException {
     removeEmployee(employee.getId());
