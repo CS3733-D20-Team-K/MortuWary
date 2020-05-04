@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.views;
 
+import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryRequest;
+import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryService;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
@@ -11,17 +13,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
-@Slf4j
-public class NewRequestController extends JamController {
-  private RequestFieldsController fieldsController;
-  @FXML private HBox fields;
+public class EditRequestController extends JamController {
+
+  @Getter
+  @JamProperty("request")
+  private MortuaryRequest request;
 
   @JamProperty("css")
   private String css;
 
-  public NewRequestController(JamEnvironment environment, JamProperties properties, Scene scene) {
+  @FXML private HBox fields;
+
+  public EditRequestController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
   }
 
@@ -30,24 +35,28 @@ public class NewRequestController extends JamController {
     super.init();
     this.getScene().getStylesheets().add(this.css);
 
-    Pair<RequestFieldsController, Pane> pair =
+    Pair<RequestFieldsController, Pane> loaded =
         JamController.load(
             RequestFieldsController.class.getResource("requestFields.fxml"),
             this.getScene(),
             this.getEnvironment(),
             this.makeChildProperties());
-    this.fieldsController = pair.getKey();
-    fields.getChildren().add(pair.getValue());
+    this.fields.getChildren().add(loaded.getValue());
   }
 
   @FXML
-  public void submit(ActionEvent actionEvent) throws MortuaryServiceException {
-    this.fieldsController.submitRequest();
-    this.switchView("dashboard.fxml");
+  private void onSave(ActionEvent actionEvent) throws MortuaryServiceException {
+    MortuaryService.instance().updateRequest(this.request);
   }
 
   @FXML
-  private void onCancel(ActionEvent actionEvent) {
-    this.switchView("dashboard.fxml");
+  private void onDelete(ActionEvent actionEvent) throws MortuaryServiceException {
+    MortuaryService.instance().removeRequest(this.request);
+    refresh();
+  }
+
+  @FXML
+  private void onPrint(ActionEvent actionEvent) {
+    this.request.printCertificate();
   }
 }

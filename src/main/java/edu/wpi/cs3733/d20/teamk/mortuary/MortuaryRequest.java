@@ -3,10 +3,10 @@ package edu.wpi.cs3733.d20.teamk.mortuary;
 import edu.wpi.cs3733.d20.teamk.mortuary.impl.cert.CertPrinter;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Slf4j
-@EqualsAndHashCode
 @ToString
 public class MortuaryRequest {
   @Getter @Setter private UUID id;
@@ -69,9 +68,22 @@ public class MortuaryRequest {
     return Optional.ofNullable(this.closedTime);
   }
 
-  public void printCertificate(String hospital) {
+  public void printCertificate() {
     log.info("Printing death certificate for: " + this.deceased);
     log.info("Request: " + this);
-    CertPrinter.print(this, hospital);
+    CertPrinter.print(this);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (!(object instanceof MortuaryRequest)) return false;
+    MortuaryRequest request = (MortuaryRequest) object;
+    return Objects.equals(id, request.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

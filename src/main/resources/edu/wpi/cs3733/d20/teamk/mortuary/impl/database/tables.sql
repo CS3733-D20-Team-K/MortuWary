@@ -21,7 +21,7 @@ create table tickets (
     circumstance varchar(32),
     description varchar(256),
     time TIMESTAMP,
-    location char(10),
+    location varchar(256),
     constraint TICKET_PK primary key (ticketID),
     constraint TICKET_EMP_FK foreign key (requestor) references employees (empID) on delete set null,
     constraint TICKET_DEC_FK foreign key (deceased) references deceased (personID) on delete set null

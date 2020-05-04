@@ -18,10 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SignatureController extends JamController {
   @FXML private Canvas canvas;
-  private double width = 2;
 
   @JamProperty("onSubmit")
-  Consumer<Image> image;
+  private Consumer<Image> image;
+
+  @JamProperty("css")
+  private String css;
 
   public SignatureController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
@@ -33,6 +35,8 @@ public class SignatureController extends JamController {
   @Override
   public void init() {
     super.init();
+    this.getScene().getStylesheets().add(this.css);
+
     this.canvas.getGraphicsContext2D().setLineWidth(5);
     this.canvas.setOnMouseDragged(
         me -> {

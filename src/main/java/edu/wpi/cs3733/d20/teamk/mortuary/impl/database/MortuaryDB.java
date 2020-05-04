@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.database;
 
+import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,23 +18,29 @@ public class MortuaryDB {
   private boolean tableExists = false;
   private String databaseName;
 
-  public MortuaryDB(String name) {
+  public MortuaryDB(String name) throws MortuaryServiceException {
     this.databaseName = name;
     setupConnection();
+    checkTables();
   }
 
-  public MortuaryDB() {
+  public MortuaryDB(Connection connection) throws MortuaryServiceException {
+    this.connection = connection;
+    checkTables();
+  }
+
+  public MortuaryDB() throws MortuaryServiceException {
     this.databaseName = "MortuaryDB";
     setupConnection();
+    checkTables();
   }
 
-  private void setupConnection() {
+  private void setupConnection() throws MortuaryServiceException {
     // Get the driver for an embedded derby database
     try {
       Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-      return;
+      throw new MortuaryServiceException(e);
     }
 
     // Try the connection and throw errors if they appear
@@ -41,7 +48,13 @@ public class MortuaryDB {
       connection =
           DriverManager.getConnection(
               "jdbc:derby:" + databaseName + ";create=true;user=app;password=password;");
+    } catch (SQLException e) {
+      throw new MortuaryServiceException("Connection failed", e);
+    }
+  }
 
+  private void checkTables() throws MortuaryServiceException {
+    try {
       // Check if the tables already exist to ensure they don't get re-written
       DatabaseMetaData metas = connection.getMetaData();
       ResultSet tables = metas.getTables(connection.getCatalog(), null, "EMPLOYEES", null);
@@ -52,19 +65,20 @@ public class MortuaryDB {
         log.info("Tables don't exist, creating...");
         setupDatabase();
       }
-
     } catch (SQLException e) {
-      System.out.println("Connection failed.");
-      e.printStackTrace();
-      return;
+      throw new MortuaryServiceException("Failed to create tables", e);
     }
   }
 
-  private void setupDatabase() throws SQLException {
+  private void setupDatabase() throws MortuaryServiceException {
     String file = loadResource("tables.sql", MortuaryDB.class);
     String[] tables = file.split(";");
     for (String table : tables) {
-      connection.prepareStatement(table).executeUpdate();
+      try {
+        connection.prepareStatement(table).executeUpdate();
+      } catch (SQLException e) {
+        throw new MortuaryServiceException("Failed to create table", e);
+      }
       log.info("Created table");
     }
   }

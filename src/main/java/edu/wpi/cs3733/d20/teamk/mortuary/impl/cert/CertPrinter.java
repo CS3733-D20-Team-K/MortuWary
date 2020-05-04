@@ -22,7 +22,7 @@ import javafx.util.Pair;
 
 public class CertPrinter {
 
-  public static void print(MortuaryRequest request, String hospital) {
+  public static void print(MortuaryRequest request) {
     AtomicReference<Pair<SignatureController, Stage>> loadRes = new AtomicReference<>();
     Pair<SignatureController, Stage> loaded =
         JamController.loadStage(
@@ -39,7 +39,7 @@ public class CertPrinter {
                                   new Scene(new AnchorPane()),
                                   loadRes.get().getKey().getEnvironment(),
                                   new JamProperties());
-                          controller.getKey().set(request, hospital, image);
+                          controller.getKey().set(request, request.getLocation(), image);
 
                           Window owner = loadRes.get().getValue();
                           Pane toPrint = controller.getValue();

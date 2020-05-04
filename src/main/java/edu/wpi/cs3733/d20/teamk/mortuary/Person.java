@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Person {
+  public static final Person DEFAULT = new Person("default", "John Doe", "male", 50);
+
   private String id;
   private String name;
   private String gender;

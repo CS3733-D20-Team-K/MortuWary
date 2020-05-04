@@ -1,6 +1,9 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl;
 
-import edu.wpi.cs3733.d20.teamk.mortuary.impl.views.NewRequestController;
+import edu.wpi.cs3733.d20.teamk.mortuary.EntryPoint;
+import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryService;
+import edu.wpi.cs3733.d20.teamk.mortuary.PermissionLevel;
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.views.DashboardController;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
 import io.github.socraticphoenix.jamfx.JamProperties;
@@ -22,14 +25,19 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    MortuaryService.instance();
+
     Scene scene = new Scene(new AnchorPane());
     primaryStage.setScene(scene);
-    Pair<NewRequestController, Pane> loaded =
+    Pair<DashboardController, Pane> loaded =
         JamController.load(
-            NewRequestController.class.getResource("newRequest.fxml"),
+            DashboardController.class.getResource("dashboard.fxml"),
             scene,
             new JamEnvironment(),
-            new JamProperties());
+            new JamProperties()
+                .put("permissions", PermissionLevel.ADMIN)
+                .put("entry_point", EntryPoint.DIRECTORY)
+                .put("css", DashboardController.class.getResource("default.css").toExternalForm()));
     scene.setRoot(loaded.getValue());
     primaryStage.show();
   }

@@ -1,10 +1,16 @@
 package edu.wpi.cs3733.d20.teamk.mortuary;
 
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.MortuaryServiceImpl;
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface MortuaryService {
+
+  static MortuaryService instance() {
+    return MortuaryServiceImpl.instance();
+  }
 
   default void run(
       int xcoord,
@@ -15,7 +21,16 @@ public interface MortuaryService {
       String destNodeID,
       String originNodeID)
       throws MortuaryServiceException {
-    run(xcoord, ycoord, windowWidth, windowLength, cssPath, originNodeID, EntryPoint.NEW, null);
+    run(
+        xcoord,
+        ycoord,
+        windowWidth,
+        windowLength,
+        cssPath,
+        originNodeID,
+        EntryPoint.NEW,
+        PermissionLevel.ADMIN,
+        null);
   }
 
   default void run(
@@ -27,7 +42,16 @@ public interface MortuaryService {
       String nodeId,
       EntryPoint ep)
       throws MortuaryServiceException {
-    run(xcoord, ycoord, windowWidth, windowLength, cssPath, nodeId, ep);
+    run(
+        xcoord,
+        ycoord,
+        windowWidth,
+        windowLength,
+        cssPath,
+        nodeId,
+        ep,
+        PermissionLevel.ADMIN,
+        null);
   }
 
   void run(
@@ -38,8 +62,11 @@ public interface MortuaryService {
       String cssPath,
       String nodeId,
       EntryPoint ep,
-      UUID id)
+      PermissionLevel permissionLevel,
+      String targetId)
       throws MortuaryServiceException;
+
+  void setDatabase(Connection connection) throws MortuaryServiceException;
 
   void addRequest(MortuaryRequest request) throws MortuaryServiceException;
 
@@ -53,11 +80,17 @@ public interface MortuaryService {
 
   void addEmployee(Employee employee) throws MortuaryServiceException;
 
+  void updateEmployee(Employee employee) throws MortuaryServiceException;
+
   void removeEmployee(String employee) throws MortuaryServiceException;
 
   default void removeEmployee(Employee employee) throws MortuaryServiceException {
     removeEmployee(employee.getId());
   }
+
+  void setCurrent(Employee employee);
+
+  Employee getCurrent();
 
   Collection<MortuaryRequest> getRequests() throws MortuaryServiceException;
 

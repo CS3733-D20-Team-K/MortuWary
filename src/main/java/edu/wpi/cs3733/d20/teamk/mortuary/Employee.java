@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Employee {
+  public static final Employee UNKNOWN = new Employee("unknown", "Unknown", "Unknown");
+
   private String id;
   private String name;
   private String username;
