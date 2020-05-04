@@ -16,6 +16,10 @@
     -fx-background-color:  #f1f1f1 !important;;
 }
 
+.text-secondary{
+    -fx-text-fill: #194C80 !important;
+}
+
 .jfx-text-field{
     -fx-prompt-text-fill: WHITE;
     -jfx-focus-color: WHITE;
