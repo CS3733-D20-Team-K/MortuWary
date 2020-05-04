@@ -5,8 +5,8 @@ package edu.wpi.cs3733.d20.teamk.mortuary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.wpi.cs3733.d20.teamk.mortuary.database.MortuaryDB;
-import edu.wpi.cs3733.d20.teamk.mortuary.database.MortuaryDBController;
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.database.MortuaryDB;
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.database.MortuaryDBController;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -24,8 +24,8 @@ import org.junit.jupiter.api.*;
 public class DBTests {
   MortuaryDB database;
   MortuaryDBController controller;
-  Employee globalEmp = new Employee(UUID.randomUUID(), "Classandra", "class");
-  Person globalPerson = new Person(UUID.randomUUID(), "Deatrice", "FEMALE", 69);
+  Employee globalEmp = new Employee(UUID.randomUUID().toString(), "Classandra", "class");
+  Person globalPerson = new Person(UUID.randomUUID().toString(), "Deatrice", "FEMALE", 69);
   MortuaryRequest globalRequest =
       new MortuaryRequest(
           globalEmp,
@@ -70,18 +70,18 @@ public class DBTests {
     controller.addRequest(globalRequest);
     testEmpID = UUID.randomUUID();
     testPerID = UUID.randomUUID();
-    controller.addEmployee(testEmpID, "potato", "potato");
+    controller.addEmployee(testEmpID.toString(), "potato", "potato");
   }
 
   @Test
   public void addEmployeeTest() {
     controller.addEmployee("Test Man", "tman");
-    controller.addEmployee(UUID.randomUUID(), "Dan Burly", "dburly");
+    controller.addEmployee(UUID.randomUUID().toString(), "Dan Burly", "dburly");
   }
 
   @Test
   public void addPerson() {
-    controller.addPerson(testPerID, "Ima Dedman", "MALE", 92);
+    controller.addPerson(testPerID.toString(), "Ima Dedman", "MALE", 92);
     controller.addPerson("Igot Kildred", "OTHER", 21);
   }
 
@@ -94,7 +94,7 @@ public class DBTests {
     assertEquals(test, globalEmp);
 
     controller.removeEmployee(testEmpID);
-    assertEquals(controller.getEmployee(testEmpID), Optional.empty());
+    assertEquals(controller.getEmployee(testEmpID.toString()), Optional.empty());
   }
 
   @Test

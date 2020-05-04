@@ -53,7 +53,7 @@ public interface MortuaryService {
 
   void addEmployee(Employee employee) throws MortuaryServiceException;
 
-  void removeEmployee(UUID employee) throws MortuaryServiceException;
+  void removeEmployee(String employee) throws MortuaryServiceException;
 
   default void removeEmployee(Employee employee) throws MortuaryServiceException {
     removeEmployee(employee.getId());

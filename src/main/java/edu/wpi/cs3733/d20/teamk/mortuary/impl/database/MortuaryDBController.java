@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.d20.teamk.mortuary.database;
+package edu.wpi.cs3733.d20.teamk.mortuary.impl.database;
 
 import edu.wpi.cs3733.d20.teamk.mortuary.Circumstance;
 import edu.wpi.cs3733.d20.teamk.mortuary.Employee;
@@ -97,11 +97,11 @@ public class MortuaryDBController {
    * @param name The name of the employee
    * @param login The login token of the employee
    */
-  public void addEmployee(UUID id, String name, String login) {
+  public void addEmployee(String id, String name, String login) {
     String statement = "insert into employees values (?, ?, ?)";
     try {
-      execute(statement, Arrays.asList(id.toString(), name, login));
-      log.info("User " + login + " created with ID " + id.toString());
+      execute(statement, Arrays.asList(id, name, login));
+      log.info("User " + login + " created with ID " + id);
     } catch (SQLException e) {
       log.info("Employee could not be inserted");
       e.printStackTrace();
@@ -116,7 +116,7 @@ public class MortuaryDBController {
    */
   public void addEmployee(String name, String login) {
     UUID id = UUID.randomUUID();
-    addEmployee(id, name, login);
+    addEmployee(id.toString(), name, login);
   }
 
   /**
@@ -168,12 +168,10 @@ public class MortuaryDBController {
    * @param gender The deceased person's gender
    * @param age The deceased person's age
    */
-  public void addPerson(UUID id, String name, String gender, int age) {
+  public void addPerson(String id, String name, String gender, int age) {
     String statement = "insert into deceased values (?, ?, ?, ?)";
     try {
-      execute(
-          statement,
-          Arrays.asList(id.toString(), name, gender.toUpperCase(), Integer.toString(age)));
+      execute(statement, Arrays.asList(id, name, gender.toUpperCase(), Integer.toString(age)));
       log.info("Deceased " + name + " created with ID " + id.toString());
     } catch (SQLException e) {
       log.info("Person could not be inserted");
@@ -189,8 +187,7 @@ public class MortuaryDBController {
    * @param age The deceased person's age
    */
   public void addPerson(String name, String gender, int age) {
-    UUID id = UUID.randomUUID();
-    addPerson(id, name, gender, age);
+    addPerson(UUID.randomUUID().toString(), name, gender, age);
   }
 
   /**
@@ -221,7 +218,7 @@ public class MortuaryDBController {
     String statement = "select * from employees";
     List<Employee> emps = new ArrayList<Employee>();
     for (List<String> emp : get(statement, Arrays.asList())) {
-      emps.add(new Employee(UUID.fromString(emp.get(0)), emp.get(1), emp.get(2)));
+      emps.add(new Employee(emp.get(0), emp.get(1), emp.get(2)));
     }
 
     return emps;
@@ -234,7 +231,7 @@ public class MortuaryDBController {
    * @return
    * @throws SQLException
    */
-  public Optional<Employee> getEmployee(UUID id) throws SQLException {
+  public Optional<Employee> getEmployee(String id) throws SQLException {
     for (Employee emp : getEmployees()) {
       if (emp.getId().equals(id)) {
         return Optional.of(emp);
@@ -253,9 +250,7 @@ public class MortuaryDBController {
     String statement = "select * from deceased";
     List<Person> pers = new ArrayList<Person>();
     for (List<String> per : get(statement, Arrays.asList())) {
-      pers.add(
-          new Person(
-              UUID.fromString(per.get(0)), per.get(1), per.get(2), Integer.parseInt(per.get(3))));
+      pers.add(new Person(per.get(0), per.get(1), per.get(2), Integer.parseInt(per.get(3))));
     }
 
     return pers;
@@ -268,7 +263,7 @@ public class MortuaryDBController {
    * @return
    * @throws SQLException
    */
-  public Optional<Person> getPerson(UUID id) throws SQLException {
+  public Optional<Person> getPerson(String id) throws SQLException {
     for (Person per : getPeople()) {
       if (per.getId().equals(id)) {
         return Optional.of(per);
@@ -368,8 +363,8 @@ public class MortuaryDBController {
               UUID.fromString(ticket.get(0)),
               LocalDateTime.ofInstant(Timestamp.valueOf(ticket.get(1)).toInstant(), ZoneOffset.UTC),
               closedTime,
-              getEmployee(UUID.fromString(ticket.get(3))).orElse(null),
-              getPerson(UUID.fromString(ticket.get(4))).orElse(null),
+              getEmployee(ticket.get(3)).orElse(null),
+              getPerson(ticket.get(4)).orElse(null),
               Circumstance.valueOf(ticket.get(5)),
               LocalDateTime.ofInstant(Timestamp.valueOf(ticket.get(7)).toInstant(), ZoneOffset.UTC),
               ticket.get(6),

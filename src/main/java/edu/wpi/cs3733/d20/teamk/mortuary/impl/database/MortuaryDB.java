@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.d20.teamk.mortuary.database;
+package edu.wpi.cs3733.d20.teamk.mortuary.impl.database;
 
 import java.io.BufferedReader;
 import java.io.IOException;

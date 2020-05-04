@@ -13,6 +13,6 @@ public class Person {
   private int age;
 
   public Person(String name, String gender, int age) {
-    this(name, name, gender, age);
+    this(UUID.randomUUID().toString(), name, gender, age);
   }
 }
