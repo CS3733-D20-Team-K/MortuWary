@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.views;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListCell;
@@ -34,6 +35,7 @@ public class DashboardController extends JamController {
   @FXML private JFXTextField deceased;
 
   @FXML private JFXListView<Pane> list;
+  @FXML private JFXCheckBox openOnly;
 
   @JamProperty("css")
   private String css;
@@ -84,7 +86,7 @@ public class DashboardController extends JamController {
       for (MortuaryRequest request : MortuaryService.instance().getRequests()) {
         Pair<EditRequestController, Pane> loaded =
             JamController.load(
-                RequestFieldsController.class.getResource("editRequest.fxml"),
+                RequestFieldsController.class.getResource("requestFields.fxml"),
                 this.getScene(),
                 this.getEnvironment(),
                 this.makePopupProperties().put("request", request));
@@ -137,10 +139,4 @@ public class DashboardController extends JamController {
             "Brigham Women's Hospital");
     this.switchView("newRequest.fxml", this.makeChildProperties().put("request", request));
   }
-
-  @FXML
-  private void onSave(ActionEvent actionEvent) {}
-
-  @FXML
-  private void onDiscard(ActionEvent actionEvent) {}
 }

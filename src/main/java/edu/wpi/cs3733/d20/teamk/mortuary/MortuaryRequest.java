@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.d20.teamk.mortuary;
 
-import edu.wpi.cs3733.d20.teamk.mortuary.impl.cert.CertPrinter;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -66,12 +65,6 @@ public class MortuaryRequest {
 
   public Optional<LocalDateTime> getClosedTime() {
     return Optional.ofNullable(this.closedTime);
-  }
-
-  public void printCertificate() {
-    log.info("Printing death certificate for: " + this.deceased);
-    log.info("Request: " + this);
-    CertPrinter.print(this);
   }
 
   @Override

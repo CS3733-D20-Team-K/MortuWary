@@ -13,6 +13,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -58,7 +59,9 @@ public class SignatureController extends JamController {
   private void onSubmit(ActionEvent actionEvent) {
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
-    this.image.accept(this.canvas.snapshot(parameters, null));
+    Image image = this.canvas.snapshot(parameters, null);
+    ((Stage) this.getScene().getWindow()).close();
+    this.image.accept(image);
   }
 
   @FXML

@@ -36,7 +36,7 @@ public class App extends Application {
             new JamEnvironment(),
             new JamProperties()
                 .put("permissions", PermissionLevel.ADMIN)
-                .put("entry_point", EntryPoint.DIRECTORY)
+                .put("entry_point", EntryPoint.DASHBOARD)
                 .put("css", DashboardController.class.getResource("default.css").toExternalForm()));
     scene.setRoot(loaded.getValue());
     primaryStage.show();

@@ -18,9 +18,11 @@
     <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
          <children>
             <JFXButton alignment="CENTER" onAction="#onSave" text="Save" />
+            <Label text="                   " textOverrun="CLIP" />
+            <JFXButton fx:id="close" alignment="CENTER" onAction="#onClose" text="Close" />
             <Label text="                   " textOverrun="CLIP" />
             <JFXButton alignment="CENTER" onAction="#onDelete" text="Delete" />
             <Label text="                   " textOverrun="CLIP" />
