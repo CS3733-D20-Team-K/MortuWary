@@ -35,6 +35,9 @@ public class NewRequestController extends JamController {
 
   @FXML
   public void submit(ActionEvent actionEvent) {
-    this.fields.setEdit(false);
+    this.fields.submitRequest();
   }
+
+  @FXML
+  public void dashboard(ActionEvent actionEvent) {}
 }

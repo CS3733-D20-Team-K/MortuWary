@@ -26,7 +26,7 @@ public class App extends Application {
     primaryStage.setScene(scene);
     Pair<NewRequestController, Pane> loaded =
         JamController.load(
-            NewRequestController.class.getResource("newRequest.fxml"),
+            NewRequestController.class.getResource("dashboard.fxml"),
             scene,
             new JamEnvironment(),
             new JamProperties());

@@ -27,5 +27,6 @@
       </Label>
       <JFXButton alignment="TOP_CENTER" onAction="#submit" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
       <Pane fx:id="fieldPane" prefHeight="381.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <JFXButton alignment="TOP_CENTER" onAction="#dashboard" text="Mortuary Dashboard" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
    </children>
 </GridPane>

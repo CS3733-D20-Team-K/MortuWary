@@ -1,5 +1,14 @@
+@font-face {
+    font-family: Lato;
+    src: local('fonts/Lato-Italic.ttf');
+}
+
+.label{
+    -fx-font-family: Lato;
+}
+
 .jfx-button{
-    /*-fx-font-family: Lato;*/
+    -fx-font-family: Lato;
     -fx-font-style: normal;
     -fx-font-weight: normal;
     -fx-text-fill: #f1f1f1;
@@ -7,4 +16,13 @@
     -fx-background-radius: 50;
     -fx-border-radius: 50;
     -fx-effect: dropshadow(one-pass-box ,black ,10 ,0 ,2 ,0);
+}
+
+.button-secondary{
+    -fx-text-fill: #194C80 !important;
+    -fx-background-color:  #f1f1f1 !important;;
+}
+
+.sidebar{
+    -fx-background-color: #194C80;
 }
