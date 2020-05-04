@@ -1,8 +1,10 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.views;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryRequest;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryService;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
+import edu.wpi.cs3733.d20.teamk.mortuary.impl.cert.CertPrinter;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
 import io.github.socraticphoenix.jamfx.JamProperties;
@@ -25,6 +27,7 @@ public class EditRequestController extends JamController {
   private String css;
 
   @FXML private HBox fields;
+  @FXML private JFXButton close;
 
   public EditRequestController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
@@ -42,6 +45,12 @@ public class EditRequestController extends JamController {
             this.getEnvironment(),
             this.makeChildProperties());
     this.fields.getChildren().add(loaded.getValue());
+
+    if (this.request.isClosed()) {
+      this.close.setText("Reopen");
+    } else {
+      this.close.setText("Close");
+    }
   }
 
   @FXML
@@ -57,6 +66,17 @@ public class EditRequestController extends JamController {
 
   @FXML
   private void onPrint(ActionEvent actionEvent) {
-    this.request.printCertificate();
+    CertPrinter.print(this.request, this.getScene(), this.makeChildProperties());
+  }
+
+  @FXML
+  private void onClose(ActionEvent actionEvent) {
+    if (this.request.isOpen()) {
+      this.request.close();
+      this.close.setText("Reopen");
+    } else {
+      this.request.reopen();
+      this.close.setText("Close");
+    }
   }
 }

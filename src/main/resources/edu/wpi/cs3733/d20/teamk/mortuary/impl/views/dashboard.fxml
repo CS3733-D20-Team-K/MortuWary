@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -25,7 +26,7 @@
     <RowConstraints maxHeight="173.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="sidebar" GridPane.rowSpan="2">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="sidebar" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
             <Label alignment="CENTER" text="Mortuary Requests" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -53,6 +54,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -89,6 +91,12 @@
                      </font>
                   </Label>
                   <JFXTextField fx:id="deceased" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXCheckBox fx:id="openOnly" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Open:" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -99,10 +107,6 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="sidebar" GridPane.rowIndex="2">
          <children>
             <JFXButton onAction="#onNew" prefHeight="25.0" prefWidth="91.0" styleClass="button-secondary" text="New Request" />
-            <Label />
-            <JFXButton onAction="#onSave" prefHeight="25.0" prefWidth="89.0" styleClass="button-secondary" text="Save" />
-            <Label />
-            <JFXButton onAction="#onDiscard" styleClass="button-secondary" text="Discard Changes" />
          </children>
       </VBox>
       <JFXListView fx:id="list" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />

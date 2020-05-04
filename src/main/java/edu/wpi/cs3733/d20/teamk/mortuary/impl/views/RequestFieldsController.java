@@ -50,7 +50,7 @@ public class RequestFieldsController extends JamController {
 
     this.circumstance.getItems().setAll(Circumstance.values());
     this.circumstance.getSelectionModel().select(Circumstance.PENDING);
-    for (int i = 0; i < 150; i++) {
+    for (int i = 150; i >= 0; i--) {
       this.age.getItems().add(i);
     }
 
@@ -89,10 +89,12 @@ public class RequestFieldsController extends JamController {
     if (this.request != null) {
       this.nameOfDeceased.setText(this.request.getDeceased().getName());
       this.gender.setText((this.request.getDeceased().getGender()));
+      this.age.getSelectionModel().select(this.request.getDeceased().getAge());
       this.circumstance.setValue(this.request.getCircumstance());
       this.description.setText(this.request.getDescription());
       this.timeOfDeath.setValue(this.request.getTime().toLocalTime());
       this.dateOfDeath.setValue(this.request.getTime().toLocalDate());
+      this.place.setText(this.request.getLocation());
     }
   }
 
