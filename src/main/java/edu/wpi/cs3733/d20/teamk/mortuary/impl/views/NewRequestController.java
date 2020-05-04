@@ -6,7 +6,9 @@ import io.github.socraticphoenix.jamfx.JamProperties;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,5 +41,17 @@ public class NewRequestController extends JamController {
   }
 
   @FXML
-  public void dashboard(ActionEvent actionEvent) {}
+  public void dashboard(ActionEvent actionEvent) {
+    Stage stage = new Stage();
+    Scene scene = new Scene(new AnchorPane());
+    stage.setScene(scene);
+    Pair<NewRequestController, Pane> loaded =
+        JamController.load(
+            NewRequestController.class.getResource("dashboard.fxml"),
+            scene,
+            new JamEnvironment(),
+            new JamProperties());
+    scene.setRoot(loaded.getValue());
+    stage.show();
+  }
 }
