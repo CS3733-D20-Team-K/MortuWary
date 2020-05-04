@@ -33,14 +33,14 @@ public class DashboardController extends JamController {
   @FXML private JFXDatePicker start;
   @FXML private JFXDatePicker end;
   @FXML private JFXTextField deceased;
+  @FXML private JFXCheckBox openOnly;
 
   @FXML private JFXListView<Pane> list;
-  @FXML private JFXCheckBox openOnly;
 
   @JamProperty("css")
   private String css;
 
-  private Map<MortuaryRequest, Pair<EditRequestController, Pane>> panes = new LinkedHashMap<>();
+  private Map<MortuaryRequest, Pair<RequestBlockController, Pane>> panes = new LinkedHashMap<>();
 
   public DashboardController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
@@ -71,6 +71,15 @@ public class DashboardController extends JamController {
     this.start.setValue(LocalDate.now().minusDays(31));
 
     refresh();
+
+    this.circumstance
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener((o, a, b) -> buildList());
+    this.start.valueProperty().addListener((o, a, b) -> buildList());
+    this.end.valueProperty().addListener((o, a, b) -> buildList());
+    this.deceased.textProperty().addListener((o, a, b) -> buildList());
+    this.openOnly.selectedProperty().addListener((o, a, b) -> buildList());
   }
 
   @Override
@@ -84,9 +93,9 @@ public class DashboardController extends JamController {
     try {
       this.panes.clear();
       for (MortuaryRequest request : MortuaryService.instance().getRequests()) {
-        Pair<EditRequestController, Pane> loaded =
+        Pair<RequestBlockController, Pane> loaded =
             JamController.load(
-                RequestFieldsController.class.getResource("requestFields.fxml"),
+                RequestBlockController.class.getResource("requestBlock.fxml"),
                 this.getScene(),
                 this.getEnvironment(),
                 this.makePopupProperties().put("request", request));
@@ -99,7 +108,7 @@ public class DashboardController extends JamController {
 
   private void buildList() {
     this.list.getItems().clear();
-    for (Pair<EditRequestController, Pane> loaded : this.panes.values()) {
+    for (Pair<RequestBlockController, Pane> loaded : this.panes.values()) {
       if (this.filter(loaded.getKey().getRequest())) {
         this.list.getItems().add(loaded.getValue());
       }
@@ -111,11 +120,16 @@ public class DashboardController extends JamController {
     LocalDate start = this.start.getValue();
     LocalDate end = this.end.getValue();
     String deceased = this.deceased.getText();
+    boolean open = this.openOnly.isSelected();
 
     boolean filter = true;
 
     if (!circumstance.equals("ANY")) {
       filter &= circumstance.equalsIgnoreCase(request.getCircumstance().toString());
+    }
+
+    if (open) {
+      filter &= request.isOpen();
     }
 
     LocalDate date = request.getTime().toLocalDate();
@@ -132,7 +146,7 @@ public class DashboardController extends JamController {
     MortuaryRequest request =
         new MortuaryRequest(
             MortuaryService.instance().getCurrent(),
-            Person.DEFAULT,
+            new Person("John Doe", "male", 50),
             Circumstance.PENDING,
             LocalDateTime.now(),
             "",

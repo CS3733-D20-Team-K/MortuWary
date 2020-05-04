@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import lombok.Getter;
 
@@ -56,12 +57,15 @@ public class EditRequestController extends JamController {
   @FXML
   private void onSave(ActionEvent actionEvent) throws MortuaryServiceException {
     MortuaryService.instance().updateRequest(this.request);
+    refresh();
+    ((Stage) getScene().getWindow()).close();
   }
 
   @FXML
   private void onDelete(ActionEvent actionEvent) throws MortuaryServiceException {
     MortuaryService.instance().removeRequest(this.request);
     refresh();
+    ((Stage) getScene().getWindow()).close();
   }
 
   @FXML

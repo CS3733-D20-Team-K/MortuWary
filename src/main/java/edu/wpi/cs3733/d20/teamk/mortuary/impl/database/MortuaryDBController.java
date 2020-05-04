@@ -7,8 +7,7 @@ import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
 import edu.wpi.cs3733.d20.teamk.mortuary.Person;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -280,6 +279,14 @@ public class MortuaryDBController {
    * @param mortuaryRequest The request to add
    */
   public void addRequest(MortuaryRequest mortuaryRequest) throws MortuaryServiceException {
+    if (getPerson(mortuaryRequest.getDeceased().getId()).isEmpty()) {
+      addPerson(mortuaryRequest.getDeceased());
+    }
+
+    if (getEmployee(mortuaryRequest.getCreator().getId()).isEmpty()) {
+      addEmployee(mortuaryRequest.getCreator());
+    }
+
     String statement = "insert into tickets values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     execute(statement, mortuaryArgs(mortuaryRequest));
     log.info("Adding reqeuest: " + mortuaryRequest.getId().toString());
@@ -302,6 +309,19 @@ public class MortuaryDBController {
             + "time = ?,"
             + "location = ? "
             + "where ticketID = ?";
+
+    if (getEmployee(mortuaryRequest.getCreator().getId()).isEmpty()) {
+      addEmployee(mortuaryRequest.getCreator());
+    } else {
+      updateEmployee(mortuaryRequest.getCreator());
+    }
+
+    if (getPerson(mortuaryRequest.getDeceased().getId()).isEmpty()) {
+      addPerson(mortuaryRequest.getDeceased());
+    } else {
+      updatePerson(mortuaryRequest.getDeceased());
+    }
+
     update(statement, mortuaryArgs(mortuaryRequest));
     log.info("Adding reqeuest: " + mortuaryRequest.getId().toString());
   }
@@ -335,24 +355,17 @@ public class MortuaryDBController {
     String statement = "select * from tickets";
     List<MortuaryRequest> tickets = new ArrayList<MortuaryRequest>();
     for (List<String> ticket : get(statement, Arrays.asList())) {
-
-      LocalDateTime closedTime;
-      if (ticket.get(2) == null) {
-        closedTime = null;
-      } else {
-        closedTime =
-            LocalDateTime.ofInstant(Timestamp.valueOf(ticket.get(2)).toInstant(), ZoneOffset.UTC);
-      }
-
       tickets.add(
           new MortuaryRequest(
               UUID.fromString(ticket.get(0)),
-              LocalDateTime.ofInstant(Timestamp.valueOf(ticket.get(1)).toInstant(), ZoneOffset.UTC),
-              closedTime,
+              LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(ticket.get(1))),
+              ticket.get(2) == null
+                  ? null
+                  : LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(ticket.get(2))),
               getEmployee(ticket.get(3)).orElse(null),
               getPerson(ticket.get(4)).orElse(null),
               Circumstance.valueOf(ticket.get(5)),
-              LocalDateTime.ofInstant(Timestamp.valueOf(ticket.get(7)).toInstant(), ZoneOffset.UTC),
+              LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(ticket.get(7))),
               ticket.get(6),
               ticket.get(8)));
     }
@@ -402,29 +415,15 @@ public class MortuaryDBController {
    * @return
    */
   private List<String> mortuaryArgs(MortuaryRequest ticket) {
-    String closed;
-    if (ticket.getClosedTime().isPresent()) {
-      if (!(ticket.getClosedTime() == null)) {
-        closed = ticket.getClosedTime().get().toString();
-      } else {
-        closed = null;
-      }
-    } else {
-      closed = null;
-    }
-
     return Arrays.asList(
         ticket.getId().toString(),
-        Timestamp.from(
-                ticket.getOpenedTime().toInstant(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS))
-            .toString(),
-        closed,
-        ticket.getCreator().getId().toString(),
-        ticket.getDeceased().getId().toString(),
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(ticket.getOpenedTime()),
+        ticket.getClosedTime().map(DateTimeFormatter.ISO_LOCAL_DATE_TIME::format).orElse(null),
+        ticket.getCreator().getId(),
+        ticket.getDeceased().getId(),
         ticket.getCircumstance().toString(),
         ticket.getDescription(),
-        Timestamp.from(ticket.getTime().toInstant(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS))
-            .toString(),
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(ticket.getTime()),
         ticket.getLocation());
   }
 }

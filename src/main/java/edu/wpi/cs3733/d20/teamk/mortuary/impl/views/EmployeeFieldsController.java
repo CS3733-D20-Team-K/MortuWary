@@ -29,7 +29,6 @@ public class EmployeeFieldsController extends JamController {
   public EmployeeFieldsController(
       JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
-    properties.get("employee", Employee.class).ifPresent(e -> this.employee = e);
   }
 
   @Override
