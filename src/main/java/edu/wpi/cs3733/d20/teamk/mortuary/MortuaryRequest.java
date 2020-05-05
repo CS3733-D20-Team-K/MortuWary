@@ -11,6 +11,13 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Mortuary Request represents a request to the mortuary.
+ *
+ * Mortuary requests are for a specific deceased person and
+ * contains details about their death along with the employee
+ * who created the request.
+ */
 @AllArgsConstructor
 @Slf4j
 @ToString
@@ -28,6 +35,15 @@ public class MortuaryRequest {
   @Getter @Setter private String description;
   @Getter @Setter private String location;
 
+  /**
+   * Instantiates a mortuary request.
+   * @param creator Employee that created the request.
+   * @param deceased The deceased person.
+   * @param circumstance The circumstance of the death.
+   * @param time Time of death.
+   * @param description Description of the person's death.
+   * @param location Location of death.
+   */
   public MortuaryRequest(
       Employee creator,
       Person deceased,
@@ -47,26 +63,51 @@ public class MortuaryRequest {
     this.location = location;
   }
 
+  /**
+   * Checks if a request is closed.
+   * @return True if closed.
+   */
   public boolean isClosed() {
     return this.closedTime != null;
   }
 
+  /**
+   * Checks if a request is open.
+   * @return True if open.
+   */
   public boolean isOpen() {
     return this.closedTime == null;
   }
 
+  /**
+   * Closes the ticket.
+   *
+   * Sets the closed time to the current time.
+   */
   public void close() {
     this.closedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
   }
 
+  /**
+   * Reopens a ticket.
+   */
   public void reopen() {
     this.closedTime = null;
   }
 
+  /**
+   * Gets the closed time if the ticket is closed.
+   * @return Optional close time.
+   */
   public Optional<LocalDateTime> getClosedTime() {
     return Optional.ofNullable(this.closedTime);
   }
 
+  /**
+   * Determines the equality of requests.
+   * @param object Object to compare
+   * @return True if the object is equivalent to the request.
+   */
   @Override
   public boolean equals(Object object) {
     if (this == object) return true;
@@ -75,6 +116,10 @@ public class MortuaryRequest {
     return Objects.equals(id, request.id);
   }
 
+  /**
+   * Generates a hashcode for the request.
+   * @return Hashcode.
+   */
   @Override
   public int hashCode() {
     return Objects.hash(id);

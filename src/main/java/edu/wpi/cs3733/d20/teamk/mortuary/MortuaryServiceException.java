@@ -1,5 +1,8 @@
 package edu.wpi.cs3733.d20.teamk.mortuary;
 
+/**
+ * Exception thrown due to a failure of the mortuary API.
+ */
 public class MortuaryServiceException extends Exception {
 
   public MortuaryServiceException() {}
