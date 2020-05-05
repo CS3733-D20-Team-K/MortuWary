@@ -10,7 +10,6 @@ import edu.wpi.cs3733.d20.teamk.mortuary.impl.database.MortuaryDBController;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -60,7 +59,7 @@ public class DBTests {
   }
 
   @BeforeAll
-  private void before() throws IOException {
+  private void before() throws IOException, MortuaryServiceException {
     delete(Paths.get("MortuaryTestDB"));
     database = new MortuaryDB("MortuaryTestDB");
     controller = new MortuaryDBController(database.getConnection());
@@ -74,31 +73,31 @@ public class DBTests {
   }
 
   @Test
-  public void addEmployeeTest() {
+  public void addEmployeeTest() throws MortuaryServiceException {
     controller.addEmployee("Test Man", "tman");
     controller.addEmployee(UUID.randomUUID().toString(), "Dan Burly", "dburly");
   }
 
   @Test
-  public void addPerson() {
+  public void addPerson() throws MortuaryServiceException {
     controller.addPerson(testPerID.toString(), "Ima Dedman", "MALE", 92);
     controller.addPerson("Igot Kildred", "OTHER", 21);
   }
 
   @Test
-  public void getEmployeeTest() throws SQLException {
+  public void getEmployeeTest() throws MortuaryServiceException {
     List<Employee> emp = controller.getEmployees();
     assertEquals(globalEmp, emp.get(0));
 
     Employee test = controller.getEmployee(globalEmp.getId()).get();
     assertEquals(test, globalEmp);
 
-    controller.removeEmployee(testEmpID);
+    controller.removeEmployee(testEmpID.toString());
     assertEquals(controller.getEmployee(testEmpID.toString()), Optional.empty());
   }
 
   @Test
-  public void getPersonTest() throws SQLException {
+  public void getPersonTest() throws MortuaryServiceException {
     List<Person> emp = controller.getPeople();
     assertEquals(globalPerson, emp.get(0));
 
@@ -107,13 +106,13 @@ public class DBTests {
   }
 
   @Test
-  public void editRequestTest() throws SQLException {
+  public void editRequestTest() throws MortuaryServiceException {
     globalRequest.setCircumstance(Circumstance.SUICIDE);
     controller.updateRequest(globalRequest);
   }
 
   @Test
-  public void deleteRequestTest() throws SQLException {
+  public void deleteRequestTest() throws MortuaryServiceException {
     controller.removeRequest(globalRequest);
 
     controller.addRequest(globalRequest);
@@ -122,7 +121,7 @@ public class DBTests {
   }
 
   @Test
-  public void getRequestTest() throws SQLException {
+  public void getRequestTest() throws MortuaryServiceException {
     List<MortuaryRequest> req = controller.getRequests();
     assertEquals(globalRequest, req.get(0));
 

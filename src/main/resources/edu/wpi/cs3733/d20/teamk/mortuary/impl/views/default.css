@@ -1,0 +1,55 @@
+@font-face {
+    font-family: Lato;
+    src: local('fonts/Lato-Italic.ttf');
+}
+
+#DateTimePicker{
+    -jfx-default-color: #194C80;
+}
+
+.date-picker {
+    -fx-font-family: Lato;
+    -fx-font-style: normal;
+    -fx-font-weight: normal;
+    -fx-text-fill: #022e59;
+    -jfx-default-color: #194C80;
+}
+
+.jfx-time-picker {
+    -fx-font-family: Lato;
+    -fx-font-style: normal;
+    -fx-font-weight: normal;
+    -fx-text-fill: #022e59;
+    -jfx-default-color: #194C80;
+}
+
+.jfx-button{
+    -fx-text-fill: #f1f1f1;
+    -fx-background-color:  #194C80;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-effect: dropshadow(one-pass-box ,black ,10 ,0 ,2 ,0);
+}
+
+.button-secondary{
+    -fx-text-fill: #194C80 !important;
+    -fx-background-color:  #f1f1f1 !important;
+}
+
+.text-secondary{
+    -fx-text-fill: #194C80 !important;
+}
+
+.jfx-text-field{
+    -fx-prompt-text-fill: WHITE;
+    -jfx-focus-color: WHITE;
+    -jfx-unfocus-color: WHITE;
+}
+
+.sidebar{
+    -fx-background-color: #707070;
+}
+
+.block{
+    -fx-background-color: #194C80;
+}

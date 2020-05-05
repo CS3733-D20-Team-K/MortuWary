@@ -13,15 +13,18 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SignatureController extends JamController {
   @FXML private Canvas canvas;
-  private double width = 2;
 
   @JamProperty("onSubmit")
-  Consumer<Image> image;
+  private Consumer<Image> image;
+
+  @JamProperty("css")
+  private String css;
 
   public SignatureController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
@@ -33,6 +36,8 @@ public class SignatureController extends JamController {
   @Override
   public void init() {
     super.init();
+    this.getScene().getStylesheets().add(this.css);
+
     this.canvas.getGraphicsContext2D().setLineWidth(5);
     this.canvas.setOnMouseDragged(
         me -> {
@@ -54,7 +59,9 @@ public class SignatureController extends JamController {
   private void onSubmit(ActionEvent actionEvent) {
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
-    this.image.accept(this.canvas.snapshot(parameters, null));
+    Image image = this.canvas.snapshot(parameters, null);
+    ((Stage) this.getScene().getWindow()).close();
+    this.image.accept(image);
   }
 
   @FXML
