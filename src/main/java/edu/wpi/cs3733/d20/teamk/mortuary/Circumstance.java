@@ -8,5 +8,7 @@ public enum Circumstance {
   SUICIDE,
   CRIME,
   OTHER,
-  PENDING
+  PENDING,
+  CS3733,
+  DAKA_FOOD
 }
