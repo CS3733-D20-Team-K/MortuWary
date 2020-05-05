@@ -29,7 +29,7 @@ dependencies {
             'org.slf4j:slf4j-simple:1.7.30',
 
             'me.xdrop:fuzzywuzzy:1.1.7',
-            'com.github.SocraticPhoenix:Occurrence:master-SNAPSHOT',
+            'com.github.SocraticPhoenix:Occurrence:21ebcd5c78',
             'com.github.SocraticPhoenix:JamFX:b6c3770d11'
     )
 
@@ -66,9 +66,6 @@ test {
 jar {
     manifest {
         attributes 'Main-Class': mainClassName
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 

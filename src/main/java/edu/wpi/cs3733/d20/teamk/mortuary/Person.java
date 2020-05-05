@@ -4,9 +4,7 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/**
- * Person represents a deceased person.
- */
+/** Person represents a deceased person. */
 @Data
 @AllArgsConstructor
 public class Person {
@@ -19,6 +17,7 @@ public class Person {
 
   /**
    * Instantiates a person.
+   *
    * @param name Full name of the person.
    * @param gender Gender of the person.
    * @param age Age of person at time of death.
