@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * Represents a mortuary employee.
  *
- * Employees can create requests and be assigned to them.
+ * <p>Employees can create requests and be assigned to them.
  */
 @Data
 @AllArgsConstructor
@@ -20,6 +20,7 @@ public class Employee {
 
   /**
    * Instantiates an employee
+   *
    * @param name Name of employee.
    * @param username Username of employee.
    */
@@ -29,6 +30,7 @@ public class Employee {
 
   /**
    * Instantiates an employee without a username.
+   *
    * @param name Name of employee.
    */
   public Employee(String name) {
