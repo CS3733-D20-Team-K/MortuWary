@@ -1,11 +1,9 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.views;
 
-import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryRequest;
+import edu.wpi.cs3733.d20.teamk.mortuary.Employee;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryService;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
 import edu.wpi.cs3733.d20.teamk.mortuary.PermissionLevel;
-import edu.wpi.cs3733.d20.teamk.mortuary.impl.cert.CertPrinter;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
 import io.github.socraticphoenix.jamfx.JamProperties;
@@ -19,11 +17,12 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import lombok.Getter;
 
-public class EditRequestController extends JamController {
+public class EditEmployeeController extends JamController {
+  @FXML private HBox fields;
 
   @Getter
-  @JamProperty("request")
-  private MortuaryRequest request;
+  @JamProperty("employee")
+  private Employee employee;
 
   @JamProperty("css")
   private String css;
@@ -31,10 +30,7 @@ public class EditRequestController extends JamController {
   @JamProperty("permissions")
   private PermissionLevel level;
 
-  @FXML private HBox fields;
-  @FXML private JFXButton close;
-
-  public EditRequestController(JamEnvironment environment, JamProperties properties, Scene scene) {
+  public EditEmployeeController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
   }
 
@@ -43,9 +39,9 @@ public class EditRequestController extends JamController {
     super.init();
     this.getScene().getStylesheets().add(this.css);
 
-    Pair<RequestFieldsController, Pane> loaded =
+    Pair<EmployeeFieldsController, Pane> loaded =
         JamController.load(
-            RequestFieldsController.class.getResource("requestFields.fxml"),
+            EmployeeFieldsController.class.getResource("employeeFields.fxml"),
             this.getScene(),
             this.getEnvironment(),
             this.makeChildProperties());
@@ -56,41 +52,19 @@ public class EditRequestController extends JamController {
     } else {
       loaded.getKey().setEdit(true);
     }
-
-    if (this.request.isClosed()) {
-      this.close.setText("Reopen");
-    } else {
-      this.close.setText("Close");
-    }
   }
 
   @FXML
   private void onSave(ActionEvent actionEvent) throws MortuaryServiceException {
-    MortuaryService.instance().updateRequest(this.request);
+    MortuaryService.instance().updateEmployee(this.employee);
     refresh();
     ((Stage) getScene().getWindow()).close();
   }
 
   @FXML
   private void onDelete(ActionEvent actionEvent) throws MortuaryServiceException {
-    MortuaryService.instance().removeRequest(this.request);
+    MortuaryService.instance().removeEmployee(this.employee);
     refresh();
     ((Stage) getScene().getWindow()).close();
-  }
-
-  @FXML
-  private void onPrint(ActionEvent actionEvent) {
-    CertPrinter.print(this.request, this.getScene(), this.makeChildProperties());
-  }
-
-  @FXML
-  private void onClose(ActionEvent actionEvent) {
-    if (this.request.isOpen()) {
-      this.request.close();
-      this.close.setText("Reopen");
-    } else {
-      this.request.reopen();
-      this.close.setText("Close");
-    }
   }
 }

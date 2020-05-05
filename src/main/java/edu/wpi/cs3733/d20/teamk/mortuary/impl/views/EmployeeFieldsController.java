@@ -11,7 +11,6 @@ import io.github.socraticphoenix.jamfx.JamProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import lombok.Getter;
-import lombok.Setter;
 
 public class EmployeeFieldsController extends JamController {
   @FXML private JFXTextField username;
@@ -19,12 +18,8 @@ public class EmployeeFieldsController extends JamController {
   @FXML private JFXTextField id;
 
   @Getter
-  @Setter
   @JamProperty(value = "employee", optional = true)
   private Employee employee;
-
-  @JamProperty("css")
-  private String css;
 
   public EmployeeFieldsController(
       JamEnvironment environment, JamProperties properties, Scene scene) {
@@ -34,7 +29,6 @@ public class EmployeeFieldsController extends JamController {
   @Override
   public void init() {
     super.init();
-    this.getScene().getStylesheets().add(this.css);
 
     this.username.textProperty().addListener((o, a, b) -> this.employee.setUsername(b));
     this.name.textProperty().addListener((o, a, b) -> this.employee.setName(b));

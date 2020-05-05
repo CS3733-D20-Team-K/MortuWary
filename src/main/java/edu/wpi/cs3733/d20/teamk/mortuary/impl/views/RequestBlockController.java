@@ -17,7 +17,7 @@ public class RequestBlockController extends JamController {
 
   @Getter
   @JamProperty("request")
-  MortuaryRequest request;
+  private MortuaryRequest request;
 
   @FXML private Label name;
   @FXML private Label circumstance;

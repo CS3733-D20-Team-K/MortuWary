@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="583.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.d20.teamk.mortuary.impl.views.EditRequestController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="583.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.d20.teamk.mortuary.impl.views.EditEmployeeController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
@@ -22,10 +22,7 @@
          <children>
             <JFXButton alignment="CENTER" onAction="#onSave" text="Save" />
             <Label text="                   " textOverrun="CLIP" />
-            <JFXButton fx:id="close" alignment="CENTER" onAction="#onClose" text="Close" />
-            <Label text="                   " textOverrun="CLIP" />
             <JFXButton alignment="CENTER" onAction="#onDelete" text="Delete" />
-            <Label text="                   " textOverrun="CLIP" />
          </children>
       </HBox>
       <HBox fx:id="fields" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" />

@@ -10,6 +10,7 @@ import edu.wpi.cs3733.d20.teamk.mortuary.Circumstance;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryRequest;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryService;
 import edu.wpi.cs3733.d20.teamk.mortuary.MortuaryServiceException;
+import edu.wpi.cs3733.d20.teamk.mortuary.PermissionLevel;
 import edu.wpi.cs3733.d20.teamk.mortuary.Person;
 import io.github.socraticphoenix.jamfx.JamController;
 import io.github.socraticphoenix.jamfx.JamEnvironment;
@@ -36,6 +37,9 @@ public class DashboardController extends JamController {
   @FXML private JFXCheckBox openOnly;
 
   @FXML private JFXListView<Pane> list;
+
+  @JamProperty("permissions")
+  private PermissionLevel permissions;
 
   @JamProperty("css")
   private String css;
@@ -80,6 +84,8 @@ public class DashboardController extends JamController {
     this.end.valueProperty().addListener((o, a, b) -> buildList());
     this.deceased.textProperty().addListener((o, a, b) -> buildList());
     this.openOnly.selectedProperty().addListener((o, a, b) -> buildList());
+
+
   }
 
   @Override
@@ -152,5 +158,10 @@ public class DashboardController extends JamController {
             "",
             "Brigham Women's Hospital");
     this.switchView("newRequest.fxml", this.makeChildProperties().put("request", request));
+  }
+
+  @FXML
+  private void onViewEmployees(ActionEvent actionEvent) {
+    this.switchView("employeeDashboard.fxml");
   }
 }

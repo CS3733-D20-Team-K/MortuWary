@@ -106,6 +106,12 @@ public class MortuaryServiceImpl implements MortuaryService {
   }
 
   @Override
+  public Collection<Employee> getEmployees() throws MortuaryServiceException {
+    checkDb();
+    return this.controller.getEmployees();
+  }
+
+  @Override
   public void addEmployee(Employee employee) throws MortuaryServiceException {
     checkDb();
     this.controller.addEmployee(employee);

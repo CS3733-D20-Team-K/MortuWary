@@ -78,6 +78,8 @@ public interface MortuaryService {
     removeRequest(request.getId());
   }
 
+  Collection<Employee> getEmployees() throws MortuaryServiceException;
+
   void addEmployee(Employee employee) throws MortuaryServiceException;
 
   void updateEmployee(Employee employee) throws MortuaryServiceException;
