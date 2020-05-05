@@ -2,8 +2,7 @@ create table employees (
     empID varchar(36),
     name varchar(32),
     username varchar(16),
-    constraint EMPLOYEE_PK primary key (empID),
-    constraint EMPLOYEE_USERNAME unique (username)
+    constraint EMPLOYEE_PK primary key (empID)
 );
 create table deceased (
     personID varchar(36),

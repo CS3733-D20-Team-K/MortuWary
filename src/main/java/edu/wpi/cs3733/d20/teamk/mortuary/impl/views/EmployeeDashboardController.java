@@ -53,6 +53,10 @@ public class EmployeeDashboardController extends JamController {
 
     this.list.setSelectionModel(NoSelectionModel.emptySelection());
 
+    this.id.textProperty().addListener((o, a, b) -> buildList());
+    this.name.textProperty().addListener((o, a, b) -> buildList());
+    this.username.textProperty().addListener((o, a, b) -> buildList());
+
     refresh();
   }
 
@@ -90,7 +94,13 @@ public class EmployeeDashboardController extends JamController {
   }
 
   private boolean filter(Employee employee) {
-    return true;
+    String id = this.id.getText();
+    String name = this.name.getText();
+    String user = this.username.getText();
+
+    return Util.filter(employee.getId(), id)
+        && Util.filter(employee.getName(), name)
+        && Util.filter(employee.getUsername(), user);
   }
 
   @FXML
