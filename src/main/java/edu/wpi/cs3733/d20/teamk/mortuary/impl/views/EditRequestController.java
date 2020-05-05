@@ -33,6 +33,8 @@ public class EditRequestController extends JamController {
 
   @FXML private HBox fields;
   @FXML private JFXButton close;
+  @FXML private JFXButton delete;
+  @FXML private JFXButton print;
 
   public EditRequestController(JamEnvironment environment, JamProperties properties, Scene scene) {
     super(environment, properties, scene);
@@ -53,8 +55,10 @@ public class EditRequestController extends JamController {
 
     if (level != PermissionLevel.ADMIN) {
       loaded.getKey().setEdit(false);
+      this.delete.setDisable(true);
     } else {
       loaded.getKey().setEdit(true);
+      this.delete.setDisable(false);
     }
 
     if (this.request.isClosed()) {

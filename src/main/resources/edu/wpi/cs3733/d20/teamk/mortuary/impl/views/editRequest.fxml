@@ -24,9 +24,9 @@
             <Label text="                   " textOverrun="CLIP" />
             <JFXButton fx:id="close" alignment="CENTER" onAction="#onClose" text="Close" />
             <Label text="                   " textOverrun="CLIP" />
-            <JFXButton alignment="CENTER" onAction="#onDelete" text="Delete" />
+            <JFXButton fx:id="delete" alignment="CENTER" onAction="#onDelete" text="Delete" />
             <Label text="                   " textOverrun="CLIP" />
-            <JFXButton alignment="CENTER" onAction="#onPrint" text="Print Certificate" />
+            <JFXButton fx:id="print" alignment="CENTER" onAction="#onPrint" text="Print Certificate" />
          </children>
       </HBox>
       <HBox fx:id="fields" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" />

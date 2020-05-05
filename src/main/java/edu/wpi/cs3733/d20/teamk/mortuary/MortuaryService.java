@@ -12,6 +12,10 @@ public interface MortuaryService {
     return MortuaryServiceImpl.instance();
   }
 
+  default void run() throws MortuaryServiceException {
+    run(-1, -1, -1, -1, null, null, EntryPoint.DASHBOARD, PermissionLevel.ADMIN, null);
+  }
+
   default void run(
       int xcoord,
       int ycoord,
@@ -28,7 +32,7 @@ public interface MortuaryService {
         windowLength,
         cssPath,
         originNodeID,
-        EntryPoint.NEW,
+        EntryPoint.DASHBOARD,
         PermissionLevel.ADMIN,
         null);
   }
@@ -85,6 +89,8 @@ public interface MortuaryService {
   void updateEmployee(Employee employee) throws MortuaryServiceException;
 
   void removeEmployee(String employee) throws MortuaryServiceException;
+
+  Optional<Employee> getEmployee(String id) throws MortuaryServiceException;
 
   default void removeEmployee(Employee employee) throws MortuaryServiceException {
     removeEmployee(employee.getId());

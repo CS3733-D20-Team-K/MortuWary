@@ -18,7 +18,7 @@ public class EmployeeFieldsController extends JamController {
   @FXML private JFXTextField id;
 
   @Getter
-  @JamProperty(value = "employee", optional = true)
+  @JamProperty(value = "employee")
   private Employee employee;
 
   public EmployeeFieldsController(
@@ -33,14 +33,16 @@ public class EmployeeFieldsController extends JamController {
     this.username.textProperty().addListener((o, a, b) -> this.employee.setUsername(b));
     this.name.textProperty().addListener((o, a, b) -> this.employee.setName(b));
     this.id.textProperty().addListener((o, a, b) -> this.employee.setId(b));
+
+    displayEmployee();
   }
 
   /** Fills fields with the relevant employee. Deletes any present info. */
   public void displayEmployee() {
     if (this.employee != null) {
       this.id.setText(this.employee.getId());
-      this.name.setText(this.name.getText());
-      this.username.setText(this.username.getText());
+      this.name.setText(this.employee.getName());
+      this.username.setText(this.employee.getUsername());
     }
   }
 

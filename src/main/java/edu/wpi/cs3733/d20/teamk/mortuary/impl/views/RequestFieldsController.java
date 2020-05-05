@@ -111,6 +111,7 @@ public class RequestFieldsController extends JamController {
     this.timeOfDeath.setDisable(!editMode);
     this.dateOfDeath.setDisable(!editMode);
     this.place.setDisable(!editMode);
+    this.age.setDisable(!editMode);
   }
 
   /** Submits a new request using the current fields */

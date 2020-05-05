@@ -32,7 +32,7 @@ public class EmployeeBlockController extends JamController {
 
     this.name.setText(this.employee.getName());
     this.id.setText(this.employee.getId());
-    this.username.setText(this.employee.getId());
+    this.username.setText(this.employee.getUsername());
   }
 
   @FXML

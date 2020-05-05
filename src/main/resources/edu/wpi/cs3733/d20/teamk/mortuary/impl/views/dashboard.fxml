@@ -108,7 +108,7 @@
          <children>
             <JFXButton onAction="#onNew" prefHeight="25.0" prefWidth="110.0" styleClass="button-secondary" text="New Request" />
             <Label />
-            <JFXButton onAction="#onViewEmployees" prefHeight="25.0" prefWidth="110.0" styleClass="button-secondary" text="View Employees" />
+            <JFXButton fx:id="viewEmployees" onAction="#onViewEmployees" prefHeight="25.0" prefWidth="110.0" styleClass="button-secondary" text="View Employees" />
          </children>
       </VBox>
       <JFXListView fx:id="list" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />

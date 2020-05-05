@@ -17,6 +17,8 @@ import java.sql.Connection;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 
 public class MortuaryServiceImpl implements MortuaryService {
   private JamEnvironment environment = new JamEnvironment();
@@ -48,18 +50,42 @@ public class MortuaryServiceImpl implements MortuaryService {
       throws MortuaryServiceException {
     checkDb();
 
-    JamController.loadStage(
-        DashboardController.class.getResource(ep.getFxml()),
-        environment,
-        new JamProperties()
-            .put("permissions", permissionLevel)
-            .put("entry_point", ep)
-            .put("target_id", targetId)
-            .put(
-                "css",
-                cssPath == null
-                    ? DashboardController.class.getResource("default.css").toExternalForm()
-                    : cssPath));
+    Employee employee = null;
+    MortuaryRequest request = null;
+
+    if (targetId != null) {
+      try {
+        request = getRequest(UUID.fromString(targetId)).orElse(null);
+      } catch (IllegalArgumentException e) {
+        // IGNORE
+      }
+
+      employee = getEmployee(targetId).orElse(null);
+    }
+
+    Pair<JamController, Stage> loaded =
+        JamController.loadStage(
+            DashboardController.class.getResource(ep.getFxml()),
+            environment,
+            new JamProperties()
+                .put("permissions", permissionLevel)
+                .put("entry_point", ep)
+                .put("employee", employee)
+                .put("request", request)
+                .put(
+                    "css",
+                    cssPath == null
+                        ? DashboardController.class.getResource("default.css").toExternalForm()
+                        : cssPath));
+
+    Stage stage = loaded.getValue();
+    if (windowLength >= 0) stage.setHeight(windowLength);
+    if (windowWidth >= 0) stage.setWidth(windowWidth);
+
+    if (xcoord >= 0) stage.setX(xcoord);
+    if (ycoord >= 0) stage.setY(ycoord);
+
+    stage.show();
   }
 
   private void checkDb() throws MortuaryServiceException {
@@ -127,6 +153,12 @@ public class MortuaryServiceImpl implements MortuaryService {
   public void removeEmployee(String employee) throws MortuaryServiceException {
     checkDb();
     this.controller.removeEmployee(employee);
+  }
+
+  @Override
+  public Optional<Employee> getEmployee(String id) throws MortuaryServiceException {
+    checkDb();
+    return this.controller.getEmployee(id);
   }
 
   @Override

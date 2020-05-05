@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.d20.teamk.mortuary.impl.views;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -35,6 +36,7 @@ public class DashboardController extends JamController {
   @FXML private JFXDatePicker end;
   @FXML private JFXTextField deceased;
   @FXML private JFXCheckBox openOnly;
+  @FXML private JFXButton viewEmployees;
 
   @FXML private JFXListView<Pane> list;
 
@@ -85,7 +87,11 @@ public class DashboardController extends JamController {
     this.deceased.textProperty().addListener((o, a, b) -> buildList());
     this.openOnly.selectedProperty().addListener((o, a, b) -> buildList());
 
-
+    if (permissions != PermissionLevel.ADMIN) {
+      this.viewEmployees.setVisible(false);
+    } else {
+      this.viewEmployees.setVisible(true);
+    }
   }
 
   @Override

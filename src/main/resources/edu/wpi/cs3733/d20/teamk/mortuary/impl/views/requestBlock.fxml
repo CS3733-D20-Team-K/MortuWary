@@ -20,7 +20,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="217.0" styleClass="sidebar">
+      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="217.0" styleClass="block">
          <children>
             <Label fx:id="name" alignment="CENTER" text="Name" textFill="WHITE">
                <font>

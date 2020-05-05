@@ -27,7 +27,7 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Label>
-      <JFXTextField fx:id="id" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" />
+      <JFXTextField fx:id="id" editable="false" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="160.0" text="Name:" textAlignment="RIGHT" textFill="#404040" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <font>
             <Font name="Arial" size="18.0" />

@@ -25,7 +25,7 @@
 
 .button-secondary{
     -fx-text-fill: #194C80 !important;
-    -fx-background-color:  #f1f1f1 !important;;
+    -fx-background-color:  #f1f1f1 !important;
 }
 
 .text-secondary{
@@ -40,4 +40,8 @@
 
 .sidebar{
     -fx-background-color: #707070;
+}
+
+.block{
+    -fx-background-color: #194C80;
 }
