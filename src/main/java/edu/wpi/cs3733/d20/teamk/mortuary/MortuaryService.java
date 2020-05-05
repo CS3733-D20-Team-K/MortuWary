@@ -17,13 +17,12 @@ public interface MortuaryService {
   }
 
   default void run(
-      int xcoord,
-      int ycoord,
-      int windowWidth,
-      int windowLength,
-      String cssPath,
-      String destNodeID,
-      String originNodeID)
+          int xcoord,
+          int ycoord,
+          int windowWidth,
+          int windowLength,
+          String cssPath,
+          String originNodeID)
       throws MortuaryServiceException {
     run(
         xcoord,
