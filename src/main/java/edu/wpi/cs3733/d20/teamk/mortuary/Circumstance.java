@@ -10,5 +10,5 @@ public enum Circumstance {
   OTHER,
   PENDING,
   CS3733,
-  DAKA_FOOD
+  DAKA
 }
