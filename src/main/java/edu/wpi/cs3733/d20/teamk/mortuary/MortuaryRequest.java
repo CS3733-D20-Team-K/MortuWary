@@ -14,9 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Mortuary Request represents a request to the mortuary.
  *
- * Mortuary requests are for a specific deceased person and
- * contains details about their death along with the employee
- * who created the request.
+ * <p>Mortuary requests are for a specific deceased person and contains details about their death
+ * along with the employee who created the request.
  */
 @AllArgsConstructor
 @Slf4j
@@ -37,6 +36,7 @@ public class MortuaryRequest {
 
   /**
    * Instantiates a mortuary request.
+   *
    * @param creator Employee that created the request.
    * @param deceased The deceased person.
    * @param circumstance The circumstance of the death.
@@ -65,6 +65,7 @@ public class MortuaryRequest {
 
   /**
    * Checks if a request is closed.
+   *
    * @return True if closed.
    */
   public boolean isClosed() {
@@ -73,6 +74,7 @@ public class MortuaryRequest {
 
   /**
    * Checks if a request is open.
+   *
    * @return True if open.
    */
   public boolean isOpen() {
@@ -82,21 +84,20 @@ public class MortuaryRequest {
   /**
    * Closes the ticket.
    *
-   * Sets the closed time to the current time.
+   * <p>Sets the closed time to the current time.
    */
   public void close() {
     this.closedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
   }
 
-  /**
-   * Reopens a ticket.
-   */
+  /** Reopens a ticket. */
   public void reopen() {
     this.closedTime = null;
   }
 
   /**
    * Gets the closed time if the ticket is closed.
+   *
    * @return Optional close time.
    */
   public Optional<LocalDateTime> getClosedTime() {
@@ -105,6 +106,7 @@ public class MortuaryRequest {
 
   /**
    * Determines the equality of requests.
+   *
    * @param object Object to compare
    * @return True if the object is equivalent to the request.
    */
@@ -118,6 +120,7 @@ public class MortuaryRequest {
 
   /**
    * Generates a hashcode for the request.
+   *
    * @return Hashcode.
    */
   @Override
